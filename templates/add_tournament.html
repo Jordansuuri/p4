@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b> Création d'un tournoi</b></h1>
+
+<div>
+    <span>
+
+        <form action="/tournament_add" method="post">
+            <label for="tournamentName"><b>Nom du tournoi:<br></b></label>
+            <input type="text" name="tournamentName" id="tournamentName">
+        </Br></Br>
+
+            <label for="tournamentLocation"><b>Lieu:<br></b></label>
+            <input type="text" name="tournamentLocation" id="tournamentLocation">
+        </Br></Br>
+
+        <label for="tournamentDate"><b> Date:<br> </b></label>
+        <Br>
+            <input type="date" id="tournamentDate" name="tournamentDate"
+       value="2018-07-22"
+       min="1940-01-01" max="2021-12-31">
+        </Br></Br>
+
+            <label for="tournamentTour"><b>Nombre de tours<br></b></label>
+            <input type="number" name="tournamentTour" id="tournamentTour" size="1" max="4">
+
+        </Br></Br>
+            <label for="tournamentTournee"><b>Liste des instances rondes<br></b></label>
+            <input type="number" name="tournamentTournee" id="tournamentTournee" size="1" max="4">
+
+         </Br></Br>
+            <label for="tournamentTimeControl"><b>Contrôle du temps:</b></label></br>
+            <select name="tournamentTimeControl" id="tournamentTimeControl">
+              <option value="Bullet"> Bullet </option>
+              <option value="Blitz"> Blitz  </option>
+              <option value="Coup rapide"> Coup rapide  </option>
+            </select>
+
+          </Br></Br>
+
+        <p><b>Inscription des joueurs pour le tournoi</b></p>
+          <div class="form_settings">
+            <p><span>Joueur 1 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 2 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 3 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 4 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 5 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 6 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 7 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 8 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+        </Br></Br>
+              <label for="tournamentDescription"><b>Description du tournoi<br></b></label>
+                    <input type="text" name="tournamentDescription" id="tournamentDescription">
+
+
+            <p style="padding-top: 20px"><span>&nbsp;</span>
+   <p style="padding-top: 20px"><span>&nbsp;</span>
+    <input type="submit" class= button value="Création du tournoi">
+            </form>
+  </span>
+    <a href="/" class="button">Retour</a>
+
+</div>
+      {% endblock %}

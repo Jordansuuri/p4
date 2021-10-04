@@ -14,16 +14,6 @@ def index():
     return render_template("index.html", logo_image = logo)
 
 
-@app.route('/tournament1')
-def tournament():
-    players = allPlayer()
-    return render_template("tournament1.html", players=players)
-
-@app.route('/tournament2')
-def tournament2():
-    players = allPlayer()
-    return render_template("tournament2.html", players=players)
-
 @app.route('/player_list')
 def players():
     players = allPlayer()
@@ -40,7 +30,7 @@ def recapPlayer(id):
     player = OnePlayer(int(id))
     return render_template("recap_player.html", joueur=player)
 
-@app.route('/addplayer', methods=['POST'])
+@app.route('/player_add', methods=['POST'])
 def playerAdd():
     if request.form['playerName'] == "" or request.form['playerFirstName'] == "" or request.form['playerGender'] == "" or request.form['playerAge'] == "" or request.form['playerRanking'] == "":
         return render_template("add_player.html")
@@ -53,6 +43,19 @@ def playerAdd():
         new_player = Player(nom, prenom, sexe, date, ranking)
         addPlayer(new_player.serialise())
         return render_template("player_added.html")
+
+
+@app.route('/add_tournament', methods=['POST'])
+def tournamentAdd():
+        name = request.form['tournamentName']
+        location = request.form["tournamentLocation"]
+        date = request.form["tournamentDate"]
+        tours = request.form["tournamentTour"]
+        tournee = request.form["tournamentTournee"]
+        timeControl = request.form["tournamentTimeControl"]
+        new_tournament = Player(name, location, date, tours, tournee, timeControl)
+        addTournament(new_tournament.serialise())
+        return render_template("tournament_added.html")
 
 
 if __name__ == "__main__":
