@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Generateur de tournoi d'echec</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+        <center><img = "{{ logo_image }}"> </center>
+          <h1><a href="http://127.0.0.1:5000/"><b>Chess</b><span class="logo_colour"><b>_gen</b></span></a></h1>
+          <h2>Chess matchmaking & competition</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <li class="selected"><a href="/">Accueil</a></li> <!-- A CHANGER -->
+          <li><a href="/player_list">Liste des joueurs</a></li> <!-- A CHANGER -->
+          <li><a href="tournament_list">Liste des tournois</a></li> <!-- A CHANGER -->
+          <li><a href="another_page.html">Recapitulatifs</a></li> <!-- A CHANGER -->
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+      <div class="sidebar">
+
+      </div>
+      <div id="content">
+      {% block content %}
+        <h1><b>Bienvenue sur la webapp : ChessGen</b></h1>
+        <p>Creer des tournois, observez les classements des joueurs, le tout hors ligne et sans contrainte!</p>
+
+        <ul>
+          <li><h1><b>Creer!</b></h1></li>
+          <li><h1><b>Observez!</b></h1></li>
+          <li><h1><b>Profitez!</b></h1></li>
+        </ul>
+<a href="/tournament1" class="button">Organiser un tournoi</a> <a href="/addplayer" class="button">Ajouter des joueurs</a>
+      {% endblock %}
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

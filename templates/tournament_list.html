@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b>Listes des tournois </b></h1>
+
+{% for t in tournament %}
+<a href=" /tournament_list/{{ t.doc_id }} ">
+<div>
+    <span>
+{{ t.name }}
+  </span>
+
+  <span>
+{{ t.location }}
+  </span>
+
+    <span>
+{{ t.date }}
+  </span>
+
+    <span>
+{{ t.tour }}
+  </span>
+
+</div>
+
+</a>
+
+{% endfor %}
+</br>
+<a href="/" class="button">Retour</a>
+      {% endblock %}

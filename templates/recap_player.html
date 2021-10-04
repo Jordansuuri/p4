@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b>Information du joueur </b></h1>
+
+<div>
+
+    <p>
+        <b> Prénom: </b>
+{{ joueur.prenom }}
+  </p>
+
+  <p>
+      <b> Nom : </b>
+{{ joueur.nom }}
+  </p>
+
+    <p>
+        <b> Date de naissance: </b>
+{{ joueur.date }}
+  </p>
+
+    <p>
+        <b> Classement: </b>
+{{ joueur.ranking }}
+  </p>
+    </br>
+<a href="/player_list" class="button">Retour</a>
+</div>
+
+
+      {% endblock %}

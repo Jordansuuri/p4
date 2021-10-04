@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b> Ajout d'un tournoi</b></h1>
+
+<div>
+    <span>
+
+        <form action="/player_add" method="post">
+            <label for="tournamentName"><b>Nom du tournoi:<br></b></label>
+            <input type="text" name="tournamentName" id="tournamentName">
+        </Br>
+
+            <label for="tournamentLocation"><b>Lieu:<br></b></label>
+            <input type="text" name="tournamentLocation" id="tournamentLocation">
+        </Br>
+
+        <label for="tournamentDate"><b> Date:<br> </b></label>
+        <Br>
+            <input type="date" id="tournamentDate" name="tournamentDate"
+       value="2018-07-22"
+       min="1940-01-01" max="2021-12-31">
+<br>
+<br>
+            <label for="playerRanking"><b>Classement<br></b></label>
+            <input type="number" name="playerRanking" id="playerRanking" size="1" max="4">
+
+
+   <p style="padding-top: 20px"><span>&nbsp;</span>
+    <input type="submit" class= button value="4">
+
+
+            </form>
+  </span>
+    <a href="/" class="button">Retour</a>
+
+</div>
+      {% endblock %}

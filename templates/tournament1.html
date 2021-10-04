@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b>Creation de tournoi d'echec etape 1/2</b></h1>
+        <p><b>Inscription des joueurs pour le tournoi</b></p>
+
+            <form action="#" method="post">
+          <div class="form_settings">
+            <p><span>Joueur 1 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 2 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 3 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 4 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 5 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 6 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 7 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p><span>Joueur 8 </span><select>
+              {% for p in players %}
+              <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
+              {% endfor %}
+            </select></p>
+            <p style="padding-top: 20px"><span>&nbsp;</span>
+
+            <a href="http://127.0.0.1:5000/tournament2" class="button">Valider les joueurs</a><a href="http://127.0.0.1:5000/" class="button">Retour</a></p>
+
+          </div>
+           </form>
+      {% endblock %}
+

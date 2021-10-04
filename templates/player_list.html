@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b>Liste des joueurs </b></h1>
+
+{% for p in players %}
+<a href=" /player_list/{{ p.doc_id }} ">
+<div>
+    <span>
+        {{ p.nom }}
+        {{ p.prenom }}
+  </span>
+
+</div>
+
+</a>
+
+{% endfor %}
+</br>
+<a href="/" class="button">Retour</a>
+      {% endblock %}

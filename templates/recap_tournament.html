@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b>Information du tournoi </b></h1>
+
+<div>
+
+    <p>
+        <b> Nom: </b>
+{{ tournament.name }}
+  </p>
+
+  <p>
+      <b> Emplacement : </b>
+{{ tournament.location }}
+  </p>
+
+    <p>
+        <b> Age: </b>
+{{ tournament.date }}
+  </p>
+
+    <p>
+        <b> Nombre de tours: </b>
+{{ tournament.tour  }}
+  </p>
+    </br>
+<a href="/player_list" class="button">Retour</a>
+</div>
+
+
+      {% endblock %}

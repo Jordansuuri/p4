@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b> Ajout d'un joueur</b></h1>
+
+<div>
+    <span>
+
+        <form action="/player_add" method="post">
+            <label for="playerName"><b>Nom:<br></b></label>
+            <input type="text" name="playerName" id="playerName">
+        </Br>
+
+            <label for="playerFirstName"><b>Prénom:<br></b></label>
+            <input type="text" name="playerFirstName" id="PlayerFirstName">
+        </Br></Br>
+
+        <label for="playerGender"><b>Sexe :</b></label></Br>
+    <select name="playerGender" id="playerGender">
+        <option value="">Choisissez une option</option>
+        <option value="Male">Homme</option>
+        <option value="Female">Femme</option>
+    </select>
+<Br>
+<Br>
+        <label for="playerAge"><b> Age:<br> </b></label>
+        <Br>
+            <input type="date" id="playerAge" name="playerAge"
+       value="2018-07-22"
+       min="1940-01-01" max="2021-12-31">
+<br>
+<br>
+            <label for="playerRanking"><b>Classement<br></b></label>
+            <input type="number" name="playerRanking" id="playerRanking" size="4" max="9999">
+
+
+   <p style="padding-top: 20px"><span>&nbsp;</span>
+    <input type="submit" class= button value="Ajouter le joueur">
+
+
+            </form>
+  </span>
+    <a href="/" class="button">Retour</a>
+
+</div>
+      {% endblock %}
