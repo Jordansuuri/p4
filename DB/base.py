@@ -21,3 +21,6 @@ def oneTournament(id):
 
 def addPlayer(player):
     dbPlayer.insert(player)
+
+def addTournament(tournament):
+    dbTournament.insert(tournament)

@@ -5,7 +5,7 @@
 <div>
     <span>
 
-        <form action="/tournament_add" method="post">
+        <form action="/add_tournament" method="post">
             <label for="tournamentName"><b>Nom du tournoi:<br></b></label>
             <input type="text" name="tournamentName" id="tournamentName">
         </Br></Br>
@@ -22,11 +22,8 @@
         </Br></Br>
 
             <label for="tournamentTour"><b>Nombre de tours<br></b></label>
-            <input type="number" name="tournamentTour" id="tournamentTour" size="1" max="4">
+            <input type="number" name="tournamentTour" id="tournamentTour" size="1" max="4" value="4">
 
-        </Br></Br>
-            <label for="tournamentTournee"><b>Liste des instances rondes<br></b></label>
-            <input type="number" name="tournamentTournee" id="tournamentTournee" size="1" max="4">
 
          </Br></Br>
             <label for="tournamentTimeControl"><b>Contrôle du temps:</b></label></br>
@@ -40,49 +37,49 @@
 
         <p><b>Inscription des joueurs pour le tournoi</b></p>
           <div class="form_settings">
-            <p><span>Joueur 1 </span><select>
+            <p><span>Joueur 1 </span><select name="p1">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 2 </span><select>
+            <p><span>Joueur 2 </span><select name="p2">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 3 </span><select>
+            <p><span>Joueur 3 </span><select name="p3">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 4 </span><select>
+            <p><span>Joueur 4 </span><select name="p4">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 5 </span><select>
+            <p><span>Joueur 5 </span><select name="p5">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 6 </span><select>
+            <p><span>Joueur 6 </span><select name="p6">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 7 </span><select>
+            <p><span>Joueur 7 </span><select name="p7">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
-            <p><span>Joueur 8 </span><select>
+            <p><span>Joueur 8 </span><select name="p8">
               {% for p in players %}
               <option value="{{ p.doc_id }}"> {{ p.nom }} {{ p.prenom }}  </option>
               {% endfor %}
             </select></p>
         </Br></Br>
               <label for="tournamentDescription"><b>Description du tournoi<br></b></label>
-                    <input type="text" name="tournamentDescription" id="tournamentDescription">
+                    <textarea type="text" name="tournamentDescription" id="tournamentDescription" rows="5"> </textarea>
 
 
             <p style="padding-top: 20px"><span>&nbsp;</span>

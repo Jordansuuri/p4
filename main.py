@@ -2,6 +2,7 @@ from flask import Flask,render_template, request
 from DB.base import *
 import os
 from Classe.Player import *
+from Classe.Tournament import *
 
 app = Flask(__name__)
 
@@ -22,7 +23,7 @@ def players():
 @app.route('/tournament_list')
 def tournaments():
     tournaments = allTournament()
-    return render_template("tournament_list.html", tournois=tournaments)
+    return render_template("tournament_list.html", tournament=tournaments)
 
 
 @app.route('/player_list/<id>')
@@ -30,7 +31,11 @@ def recapPlayer(id):
     player = OnePlayer(int(id))
     return render_template("recap_player.html", joueur=player)
 
-@app.route('/player_add', methods=['POST'])
+@app.route('/to_add_player')
+def toAddPlayer():
+    return render_template("add_player.html")
+
+@app.route('/add_player', methods=['GET','POST'])
 def playerAdd():
     if request.form['playerName'] == "" or request.form['playerFirstName'] == "" or request.form['playerGender'] == "" or request.form['playerAge'] == "" or request.form['playerRanking'] == "":
         return render_template("add_player.html")
@@ -45,15 +50,26 @@ def playerAdd():
         return render_template("player_added.html")
 
 
+@app.route('/to_add_tournament')
+def toAddTournament():
+    players = allPlayer()
+    return render_template("add_tournament.html", players=players)
+
 @app.route('/add_tournament', methods=['POST'])
 def tournamentAdd():
+    if request.form['tournamentName'] == "" or request.form['tournamentLocation'] == "" or request.form['tournamentDate'] == "" or request.form['tournamentTour'] == ""  or request.form['tournamentTimeControl'] == "" :
+        return render_template("add_tournament.html")
+    else :
         name = request.form['tournamentName']
         location = request.form["tournamentLocation"]
         date = request.form["tournamentDate"]
         tours = request.form["tournamentTour"]
-        tournee = request.form["tournamentTournee"]
         timeControl = request.form["tournamentTimeControl"]
-        new_tournament = Player(name, location, date, tours, tournee, timeControl)
+        player = []
+        for p in range(1,9):
+            print(player)
+            player.append(request.form["p"+str(p)])
+        new_tournament = Tournament(name, location, date, timeControl, player, tours)
         addTournament(new_tournament.serialise())
         return render_template("tournament_added.html")
 
