@@ -12,6 +12,6 @@ class Tournament:
 
 
 	def serialise(self):
-		return {'nom': self.nom, 'Localisation': self.localisation, 'date': self.date, 'tours': self.tours, 'tournee': self.tournee, 'timeControl': self.timeControl, 'players': self.players}
+		return {'nom': self.nom, 'localisation': self.localisation, 'date': self.date, 'tours': self.tours, 'tournee': self.tournee, 'timeControl': self.timeControl, 'players': self.players}
 
 

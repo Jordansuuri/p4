@@ -25,6 +25,10 @@ def tournaments():
     tournaments = allTournament()
     return render_template("tournament_list.html", tournament=tournaments)
 
+@app.route('/tournament_list/<id>')
+def recapTournament(id):
+    tournament = oneTournament(int(id))
+    return render_template("recap_tournament.html", tournament=tournament)
 
 @app.route('/player_list/<id>')
 def recapPlayer(id):
