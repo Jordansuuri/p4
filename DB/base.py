@@ -1,4 +1,5 @@
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
+from tinydb.table import Document
 
 dbPlayer = TinyDB('DB/player.json')
 dbTournament = TinyDB('DB/tournament.json')
@@ -24,3 +25,7 @@ def addPlayer(player):
 
 def addTournament(tournament):
     dbTournament.insert(tournament)
+
+def maj_tournoi(id, tournament):
+    dbTournament.remove(doc_ids=[int(id)])
+    dbTournament.insert(Document(tournament.serialise(), doc_id=id))

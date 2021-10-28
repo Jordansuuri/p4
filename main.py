@@ -30,6 +30,22 @@ def recapTournament(id):
     tournament = oneTournament(int(id))
     return render_template("recap_tournament.html", tournament=tournament)
 
+@app.route('/start_tournament/<id>')
+def StartTournament(id):
+    tournament = deserialiseTournoi(oneTournament(int(id)))
+    listeid = tournament.players
+    listeJoueurs = []
+    for i in listeid:
+        listeJoueurs.append(OnePlayer(int(i)))
+
+    match = {}
+    for p in range(4):
+        match[str(len(match)+1)] = [listeJoueurs[p],listeJoueurs[p+4],None]
+    if not str(len(tournament.tournee)) in tournament.tournee:
+        tournament.tournee[str(len(tournament.tournee) + 1)] = match
+        maj_tournoi(id, tournament)
+    return render_template("start_tournament.html", match=match)
+
 @app.route('/player_list/<id>')
 def recapPlayer(id):
     player = OnePlayer(int(id))
@@ -71,7 +87,6 @@ def tournamentAdd():
         timeControl = request.form["tournamentTimeControl"]
         player = []
         for p in range(1,9):
-            print(player)
             player.append(request.form["p"+str(p)])
         new_tournament = Tournament(name, location, date, timeControl, player, tours)
         addTournament(new_tournament.serialise())
@@ -80,4 +95,5 @@ def tournamentAdd():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 

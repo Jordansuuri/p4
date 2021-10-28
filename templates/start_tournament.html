@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+      {% block content %}
+        <h1><b> Start Tournoi </br> tour = ajout du numero</b></h1>
+
+<div>
+    <span>
+        <p><b>Veuillez selectionner le vainqueur de chaque matchs</b></p>
+          <form class="form_settings">
+             {% for i,m in match.items() %}
+            <p><span>Match {{ i }} </span> </br>
+              <span>{{ m[0].nom }} {{ m[0].prenom }} </span>
+              <span>{{ m[1].nom }} {{ m[1].prenom }}</span>
+               {% if m[2] == None %}
+                <select name="match{{ i }}">
+              <option value="{{ m[0].doc_id }}"> {{ m[0].nom }} {{ m[0].prenom }}  </option>
+              <option value="{{ m[1].doc_id }}"> {{ m[1].nom }} {{ m[1].prenom }}  </option>
+              <option value="pat"> Pat</option>
+            </select> {% else %} Match terminé {% endif %}</p>
+            {% endfor %}
+
+
+            <p style="padding-top: 20px"><span>&nbsp;</span>
+   <p style="padding-top: 20px"><span>&nbsp;</span>
+    <input type="submit" class= button value="Enrengistrer le résultat">
+            </form>
+  </span>
+    <a href="/" class="button">Retour</a>
+
+</div>
+      {% endblock %}
