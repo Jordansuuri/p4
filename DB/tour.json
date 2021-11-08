@@ -1,0 +1,28 @@
+{
+  "_default": {
+    "1": {
+      "idtournoi": "1",
+      "nom": "Round1",
+      "match1": [
+        "7",
+        "11",
+        null
+      ],
+      "match2": [
+        "8",
+        "12",
+        null
+      ],
+      "match3": [
+        "9",
+        "13",
+        null
+      ],
+      "match4": [
+        "10",
+        "14",
+        null
+      ]
+    }
+  }
+}

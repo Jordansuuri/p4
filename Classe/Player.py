@@ -10,6 +10,7 @@ class Player:
 
 
     def serialise(self):
+        """Transforme l'objet en format json pour tinyDB"""
         return {'nom':self.nom,'prenom':self.prenom,'date':self.date,'sexe':self.sexe,'ranking':self.ranking}
 
     def set_ranking(self, nouveau_ranking):
