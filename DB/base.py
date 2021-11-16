@@ -46,3 +46,11 @@ def addTour(result_tour):
 def recup_tour(id, nom):
     req = Query()
     return dbTour.get(req.idtournoi == id and req.nom == nom)
+
+def oneTour(id):
+    tour = dbTour.get(doc_id=int(id))
+    return tour
+
+def majTour(id, tour):
+    dbTour.remove(doc_ids=[int(id)])
+    dbTour.insert(Document(tour, doc_id=id))

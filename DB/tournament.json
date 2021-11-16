@@ -4,10 +4,10 @@
       "nom": "Tournoi Regional ",
       "localisation": "Chambery",
       "date": "2018-07-22",
-      "tours": "4",
-      "tournee": {
-        "1": 1
-      },
+      "nb_tours": "4",
+      "tournee": [
+         "1"
+      ],
       "timeControl": "Bullet",
       "players": [
         "7",

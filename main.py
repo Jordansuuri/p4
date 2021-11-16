@@ -37,35 +37,61 @@ def recapTournament(id):
 
 @app.route('/start_tournament/<id>')
 def StartTournament(id):
+    """ Récupération du tournoi en deserialisant le tournois dans un objet auparavant en json"""
     tournament = deserialiseTournoi(oneTournament(int(id)))
+    """ Récupération de la liste des ID des joueurs """
     list_id = tournament.players
+    #TRIER LISTE ID PAR RAPPORT AU CLASSEMENT
     listPlayers = []
+    """ Ajout des id des joueurs dans une liste (listPlayers) """
     for i in list_id:
         listPlayers.append(OnePlayer(int(i)))
-
+    """Creation de deux dictionnaires, match & matchdb"""
     match = {}
     matchdb = {}
     for p in range(4):
-        #matchmaking
+        """" Création des différents matchs (matchmakking) avec en simultanée l'id et le nom du joueur"""
         match[str(len(match) + 1)] = [listPlayers[p], listPlayers[p + 4], None]
         matchdb[str(len(matchdb) + 1)] = [list_id[p], list_id[p + 4], None]
-    #SI F5
+    """ Securité afin que l'utilisateur n'abuses pas du refresh de la page"""
     if not str(len(tournament.tournee)) in tournament.tournee:
-        tour = Tour(id, "Round1",matchdb["1"],matchdb["2"],matchdb["3"],matchdb["4"])
+        """Creation de l'objet tour qui appelle la premier fonction"""
+        tour = Tour(id, "Round"+str(len(tournament.tournee)+1),matchdb["1"],matchdb["2"],matchdb["3"],matchdb["4"])
+        """Enregistrement du tour dans la base de donnée"""
         addTour(tour.serialise())
-        tour = recup_tour(id, "Round1")
-        tournament.tournee[str(len(tournament.tournee) + 1)] = tour.doc_id
+        tour = recup_tour(id, "Round"+str(len(tournament.tournee)+1))
+        """ Enrengistrement de l'id du round dans l'objet tournoi"""
+        tournament.tournee.append(tour.doc_id)
         maj_tournoi(id, tournament)
-    return render_template("start_tournament.html", match=match)
+    return render_template("start_tournament.html", match=match, tournament=oneTournament(int(id)))
 
 
 @app.route('/tour_progress/<id>', methods=['GET', 'POST'])
 def Tour_progress(id):
-    match1 = request.form['match1']
-    match2 = request.form['match2']
-    match3 = request.form['match3']
-    match4 = request.form['match4']
+    """Recupération du tournoi"""
+    tournament = deserialiseTournoi(oneTournament(int(id)))
+    """Récupération des id du dernier tour"""
 
+    tours = tournament.tournee
+    """Recupération du dernier tour dans le tableau tournee"""
+    last_tour = oneTour(tours[-1])
+    info_tour = []
+
+    """Affectation du résultat de chaque match"""
+
+    last_tour["match1"][2] = request.form['match1']
+    last_tour["match2"][2] = request.form['match2']
+    last_tour["match3"][2] = request.form['match3']
+    last_tour["match4"][2] = request.form['match4']
+
+    """Enrengistrement du tour avec maj_tournoi"""
+
+    majTour(tours[-1],last_tour)
+
+    """Récuperation du tournoi"""
+
+    """Creation du prochain matchmaking"""
+    # A ajouter : des conditions afin de ne pas rencontrer de nouveau les meme joueurs
 
     return render_template('tour_progress.html')
      #    if tour > 4:
