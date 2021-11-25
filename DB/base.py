@@ -12,7 +12,7 @@ def allPlayer():
 
 
 def OnePlayer(id):
-    player = dbPlayer.get(doc_id=id)
+    player = dbPlayer.get(doc_id=int(id))
     return player
 
 
@@ -22,7 +22,7 @@ def allTournament():
 
 
 def oneTournament(id):
-    tournament = dbTournament.get(doc_id=id)
+    tournament = dbTournament.get(doc_id=int(id))
     return tournament
 
 

@@ -31,21 +31,21 @@ def tournaments():
 
 @app.route('/tournament_list/<id>')
 def recapTournament(id):
-    tournament = oneTournament(int(id))
+    tournament = oneTournament(id)
     return render_template("recap_tournament.html", tournament=tournament)
 
 
 @app.route('/start_tournament/<id>')
 def StartTournament(id):
     """ Récupération du tournoi en deserialisant le tournois dans un objet auparavant en json"""
-    tournament = deserialiseTournoi(oneTournament(int(id)))
+    tournament = deserialiseTournoi(oneTournament(id))
     """ Récupération de la liste des ID des joueurs """
     list_id = tournament.players
-    #TRIER LISTE ID PAR RAPPORT AU CLASSEMENT
+    # TRIER LISTE ID PAR RAPPORT AU CLASSEMENT
     listPlayers = []
     """ Ajout des id des joueurs dans une liste (listPlayers) """
     for i in list_id:
-        listPlayers.append(OnePlayer(int(i)))
+        listPlayers.append(OnePlayer(i))
     """Creation de deux dictionnaires, match & matchdb"""
     match = {}
     matchdb = {}
@@ -56,26 +56,26 @@ def StartTournament(id):
     """ Securité afin que l'utilisateur n'abuses pas du refresh de la page"""
     if not str(len(tournament.tournee)) in tournament.tournee:
         """Creation de l'objet tour qui appelle la premier fonction"""
-        tour = Tour(id, "Round"+str(len(tournament.tournee)+1),matchdb["1"],matchdb["2"],matchdb["3"],matchdb["4"])
+        tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), matchdb["1"], matchdb["2"], matchdb["3"],
+                    matchdb["4"])
         """Enregistrement du tour dans la base de donnée"""
         addTour(tour.serialise())
-        tour = recup_tour(id, "Round"+str(len(tournament.tournee)+1))
+        tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
         """ Enrengistrement de l'id du round dans l'objet tournoi"""
         tournament.tournee.append(tour.doc_id)
         maj_tournoi(id, tournament)
-    return render_template("start_tournament.html", match=match, tournament=oneTournament(int(id)))
+    return render_template("start_tournament.html", match=match, tournament=oneTournament(id))
 
 
 @app.route('/tour_progress/<id>', methods=['GET', 'POST'])
 def Tour_progress(id):
     """Recupération du tournoi"""
-    tournament = deserialiseTournoi(oneTournament(int(id)))
+    tournament = deserialiseTournoi(oneTournament(id))
     """Récupération des id du dernier tour"""
 
     tours = tournament.tournee
     """Recupération du dernier tour dans le tableau tournee"""
     last_tour = oneTour(tours[-1])
-    info_tour = []
 
     """Affectation du résultat de chaque match"""
 
@@ -86,22 +86,50 @@ def Tour_progress(id):
 
     """Enrengistrement du tour avec maj_tournoi"""
 
-    majTour(tours[-1],last_tour)
+    majTour(tours[-1], last_tour)
 
-    """Récuperation du tournoi"""
+    """Création d'une liste afin de stocker les id des joueurs gagnants d'abord"""
 
+    rematch_list = []
+    match = {}
+    matchdb = {}
+
+    for p in range(4):
+        if last_tour['match'+str(p+1)][2] == "pat":
+            rematch_list.append(last_tour["match"+str(p+1)][0])
+        else :
+            rematch_list.append(last_tour["match"+str(p+1)][2])
+    print(rematch_list)
+    """ puis perdant par la suite afin de les faire jouer entre eux """
+
+    for p in range(4):
+        if last_tour['match'+str(p+1)][2] == last_tour['match'+str(p+1)][1]:
+            rematch_list.append(last_tour["match"+str(p+1)][0])
+        else:
+            rematch_list.append(last_tour["match"+str(p+1)][1])
+    print(rematch_list)
     """Creation du prochain matchmaking"""
+
+    for p in range(4):
+        match[str(len(match) + 1)] = [rematch_list[p], rematch_list[p + 4], None]
+        matchdb[str(len(matchdb) + 1)] = [rematch_list[p], rematch_list[p + 4], None]
+
+    tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), match["1"], match["2"], match["3"],match["4"])
+    """Enregistrement du tour dans la base de donnée"""
+    addTour(tour.serialise())
+
     # A ajouter : des conditions afin de ne pas rencontrer de nouveau les meme joueurs
 
     return render_template('tour_progress.html')
-     #    if tour > 4:
+    #    if tour > 4:
     #    return render_template("fin_tournament.html")
     # else :
     #     return render_template('tour_progress.html')
 
+
 @app.route('/player_list/<id>')
 def recapPlayer(id):
-    player = OnePlayer(int(id))
+    player = OnePlayer(id)
     return render_template("recap_player.html", joueur=player)
 
 
