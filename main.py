@@ -76,6 +76,7 @@ def Tour_progress(id):
     tours = tournament.tournee
     """Recupération du dernier tour dans le tableau tournee"""
     last_tour = oneTour(tours[-1])
+    tours.pop(-1)
 
     """Affectation du résultat de chaque match"""
 
@@ -91,9 +92,6 @@ def Tour_progress(id):
     """Création d'une liste afin de stocker les id des joueurs gagnants d'abord"""
 
     rematch_list = []
-    match = {}
-    matchdb = {}
-
     for p in range(4):
         if last_tour['match'+str(p+1)][2] == "pat":
             rematch_list.append(last_tour["match"+str(p+1)][0])
@@ -101,22 +99,30 @@ def Tour_progress(id):
             rematch_list.append(last_tour["match"+str(p+1)][2])
     print(rematch_list)
     """ puis perdant par la suite afin de les faire jouer entre eux """
-
+    #ajout fonction pat? si joueur 1 ou 2 etc #
     for p in range(4):
         if last_tour['match'+str(p+1)][2] == last_tour['match'+str(p+1)][1]:
             rematch_list.append(last_tour["match"+str(p+1)][0])
         else:
             rematch_list.append(last_tour["match"+str(p+1)][1])
     print(rematch_list)
-    """Creation du prochain matchmaking"""
 
-    for p in range(4):
-        match[str(len(match) + 1)] = [rematch_list[p], rematch_list[p + 4], None]
-        matchdb[str(len(matchdb) + 1)] = [rematch_list[p], rematch_list[p + 4], None]
+    for m in range(4):
+        matchok = False
+        i = 1
+        while not matchok and i < len(rematch_list):
+            match = [rematch_list[0],rematch_list[i]]
+        """verification que le match a déjà eu lieu"""
+            if:
+                ### chargement de la tournée d'avant (last tour)
+                last_tour = oneTour(tours[-1])
 
-    tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), match["1"], match["2"], match["3"],match["4"])
-    """Enregistrement du tour dans la base de donnée"""
-    addTour(tour.serialise())
+        """Si le match a déjà eu lieu"""
+            else:
+                i += 1
+    """Création du prochain matchmaking en prenant les 2 premier ID puis en les supprimant"""
+
+
 
     # A ajouter : des conditions afin de ne pas rencontrer de nouveau les meme joueurs
 
