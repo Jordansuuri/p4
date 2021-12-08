@@ -76,7 +76,7 @@ def Tour_progress(id):
     tours = tournament.tournee
     """Recupération du dernier tour dans le tableau tournee"""
     last_tour = oneTour(tours[-1])
-    tours.pop(-1)
+
 
     """Affectation du résultat de chaque match"""
 
@@ -107,30 +107,62 @@ def Tour_progress(id):
             rematch_list.append(last_tour["match"+str(p+1)][1])
     print(rematch_list)
 
-    for m in range(4):
+    list_matchs = []
+    b = 0
+
+    """Boucle pour itérer la round et extraire chaque match de chaque round"""
+    for round in range(1, len(tours) + 1):
+        """ Iteration des round r pour en extraire les prochains matchs"""
+        while b < 4:
+            """ Extraction des id chaque match de chaque tour et le mettre dans une list"""
+            m = recup_tour(id, "Round" + str(round))["match" + str(b + 1)]
+            m = m[:-1]
+            list_matchs.append(m)
+            b += 1
+        b = 0
+
+    nouveau_match = {}
+    matchtemplate = {}
+
+    for j in range(4):
         matchok = False
         i = 1
         while not matchok and i < len(rematch_list):
             match = [rematch_list[0],rematch_list[i]]
-        """verification que le match a déjà eu lieu"""
-            if:
-                ### chargement de la tournée d'avant (last tour)
-                last_tour = oneTour(tours[-1])
+            """verification que le match a déjà eu lieu"""
+            for m in list_matchs:
+                if match[0] == m[0] or match[0] == m[1]:
+                    if match[1] == m[0] or match[1] == m[1]:
+                        i += 1
+                        matchok = False
+                    else:
+                        matchok = True
+                else:
+                    matchok = True
 
-        """Si le match a déjà eu lieu"""
-            else:
-                i += 1
-    """Création du prochain matchmaking en prenant les 2 premier ID puis en les supprimant"""
+        """" Création des différents matchs (matchmakking) avec en simultanée l'id et le nom du joueur"""
+        nouveau_match[str(j + 1)] = [match[0], match[1], None]
+        matchtemplate[str(len(matchtemplate) + 1)] = [OnePlayer(match[0]), OnePlayer(match[1]),None]
+
+        del rematch_list[0]
+        del rematch_list[i-1]
+    print(nouveau_match)
+
+    if int(id) == len(tournament.tournee):
+        """Creation de l'objet tour qui appelle la premier fonction"""
+        tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), nouveau_match["1"], nouveau_match["2"], nouveau_match["3"],
+                    nouveau_match["4"])
+        """Enregistrement du tour dans la base de donnée"""
+        addTour(tour.serialise())
+        tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
+        """ Enrengistrement de l'id du round dans l'objet tournoi"""
+        tournament.tournee.append(tour.doc_id)
+        maj_tournoi(id, tournament)
+
+    return render_template('tour_progress.html', match=matchtemplate, tournament=oneTournament(id))
 
 
 
-    # A ajouter : des conditions afin de ne pas rencontrer de nouveau les meme joueurs
-
-    return render_template('tour_progress.html')
-    #    if tour > 4:
-    #    return render_template("fin_tournament.html")
-    # else :
-    #     return render_template('tour_progress.html')
 
 
 @app.route('/player_list/<id>')

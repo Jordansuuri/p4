@@ -54,3 +54,6 @@ def oneTour(id):
 def majTour(id, tour):
     dbTour.remove(doc_ids=[int(id)])
     dbTour.insert(Document(tour, doc_id=id))
+
+def nbTour(id):
+    pass
