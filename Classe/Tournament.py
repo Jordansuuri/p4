@@ -1,4 +1,3 @@
-
 class Tournament:
 	"""initialise le nom, l'emplacement et la date du tournoi"""
 	def __init__(self, name, location, date, timeControl, player, nb_tours = 4, tournee =[]):

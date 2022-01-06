@@ -42,10 +42,17 @@ def StartTournament(id):
     """ Récupération de la liste des ID des joueurs """
     list_id = tournament.players
     # TRIER LISTE ID PAR RAPPORT AU CLASSEMENT
+    #Utiliser sort
     listPlayers = []
     """ Ajout des id des joueurs dans une liste (listPlayers) """
     for i in list_id:
         listPlayers.append(OnePlayer(i))
+    """Création d'un classement intermediaire"""
+
+    ranking_inter = []
+    for i in range(len(list_id)):
+        ranking_inter.append([list_id[i], listPlayers[i]["ranking"], 0])
+
     """Creation de deux dictionnaires, match & matchdb"""
     match = {}
     matchdb = {}
@@ -56,8 +63,9 @@ def StartTournament(id):
     """ Securité afin que l'utilisateur n'abuses pas du refresh de la page"""
     if not str(len(tournament.tournee)) in tournament.tournee:
         """Creation de l'objet tour qui appelle la premier fonction"""
+        #Recuperation de l'heure du tour afin de l'intergrer a la variable "tour"
         tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), matchdb["1"], matchdb["2"], matchdb["3"],
-                    matchdb["4"])
+                    matchdb["4"], ranking_inter)
         """Enregistrement du tour dans la base de donnée"""
         addTour(tour.serialise())
         tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
@@ -75,37 +83,40 @@ def Tour_progress(id):
 
     tours = tournament.tournee
     """Recupération du dernier tour dans le tableau tournee"""
+    #ajout date & heure de fin
     last_tour = oneTour(tours[-1])
-
-
+    ranking_inter = last_tour["ranking"]
     """Affectation du résultat de chaque match"""
-
+    print(ranking_inter)
     last_tour["match1"][2] = request.form['match1']
     last_tour["match2"][2] = request.form['match2']
     last_tour["match3"][2] = request.form['match3']
     last_tour["match4"][2] = request.form['match4']
-
+    # Ici on doit ajouter le nombre de points aux gagnants & aux pats (classement intermediaire) [[id,classement, nbPoints],[etc,etc,etc] x8
+    # Ajouter à tour ligne 162
     """Enrengistrement du tour avec maj_tournoi"""
-
+    # ajout du classement & date de fin dans le MAJ tour
     majTour(tours[-1], last_tour)
 
     """Création d'une liste afin de stocker les id des joueurs gagnants d'abord"""
-
     rematch_list = []
     for p in range(4):
-        if last_tour['match'+str(p+1)][2] == "pat":
-            rematch_list.append(last_tour["match"+str(p+1)][0])
-        else :
-            rematch_list.append(last_tour["match"+str(p+1)][2])
-    print(rematch_list)
+        id_vainqueur = last_tour['match'+str(p+1)][2]
+        if id_vainqueur!="pat":
+            # boucle sur ranking_inter pour chercher l'id du vainqueur (indice 0) pour modifier le score interne (indice 2)
+            # pour chaque tableau dans ranking_inter
+            #    est-ce que id_vainqueur est égal à l'indice 0 du tableau
+                    #  si oui augmente indice 2 de +1
+                    # si non (rien à faire) car ça va tester le tableau suivant
+        else: # si pat
+            # récuperer les id des deux joueurs du match et tu vas boucler sur ranking_inter pour ajouter 0.5
+    # une fois que les scores internes sont mis à jour, il faut classer le ranking_inter en fonction du score interne
+
+ # tu crée rematch_list qui ne va contenir que les id des joueurs dans l'ordre voulu (attention ranking_inter est alors classé!)
+    for j in ranking_inter:
+        rematch_list.append(j[0])
     """ puis perdant par la suite afin de les faire jouer entre eux """
     #ajout fonction pat? si joueur 1 ou 2 etc #
-    for p in range(4):
-        if last_tour['match'+str(p+1)][2] == last_tour['match'+str(p+1)][1]:
-            rematch_list.append(last_tour["match"+str(p+1)][0])
-        else:
-            rematch_list.append(last_tour["match"+str(p+1)][1])
-    print(rematch_list)
 
     list_matchs = []
     b = 0
@@ -146,12 +157,11 @@ def Tour_progress(id):
 
         del rematch_list[0]
         del rematch_list[i-1]
-    print(nouveau_match)
 
-    if int(id) == len(tournament.tournee):
+    if int(id) == len(tournament.tournee): # sécurisation de la route pour éviter d'enregistrer des tours vides
         """Creation de l'objet tour qui appelle la premier fonction"""
         tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), nouveau_match["1"], nouveau_match["2"], nouveau_match["3"],
-                    nouveau_match["4"])
+                    nouveau_match["4"], ranking_inter)
         """Enregistrement du tour dans la base de donnée"""
         addTour(tour.serialise())
         tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))

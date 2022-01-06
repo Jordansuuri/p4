@@ -5,7 +5,7 @@
 <div id="site_content">
     <span>
         <p><b>Veuillez selectionner le vainqueur de chaque matchs</b></p>
-          <form class="form_settings" action="/tour_progress" method="post">
+          <form class="form_settings" action="/tour_progress/{{ tournament.doc_id }}" method="post">
              {% for i,m in match.items() %}
             <p>Match {{ i }}  </br>
               {{ m[0].nom }} {{ m[0].prenom }} VS
