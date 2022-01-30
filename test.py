@@ -11,36 +11,49 @@ id = 1
 tournament = deserialiseTournoi(oneTournament(id))
 tours = tournament.tournee
 last_tour = oneTour(tours[-1])
-
-# stockage de la liste des tours
-
 list_matchs = []
 
-b = 0
-"""Boucle pour itérer la round et extraire chaque match de chaque round"""
-for round in range(1, len(tours) + 1) :
-    """ Iteration des round r pour en extraire les prochains matchs"""
-    while b < 4:
-        """ Extraction des id chaque match de chaque tour et le mettre dans une list"""
-        m = recup_tour(id, "Round" + str(round))["match" + str(b+1)]
-        m = m[:-1]
-        list_matchs.append(m)
-        b += 1
-    b = 0
+ranking_inter = [['7', '1500', 0], ['8', '1500', 0], ['9', '1500', 0], ['10', '1500', 0], ['11', '1500', 0], ['12', '1500', 0], ['13', '1500', 0], ['14', '1500', 0]]
 
-fauxmatchs = ['13','9']
-for m in list_matchs:
-    if fauxmatchs[0] == m[0] or fauxmatchs[0] == m[1]:
-        if fauxmatchs[1] == m[0] or fauxmatchs[1] == m[1]:
-            print("le match a eu lieu")
-        else:
-            print(" le match n'a pas eu lieu")
+last_tour = oneTour(tours[-2])
+p = 0
+id_vainqueur = last_tour['match'+str(p+1)][2]
+
+
+for p in range(4):
+    id_vainqueur = last_tour['match' + str(p+1)][2]
+    if id_vainqueur != "pat":
+        print("id du vainqueur : "+id_vainqueur)
+        # boucle sur ranking_inter pour chercher l'id du vainqueur (indice 0) pour modifier le score interne (indice 2)
+        # pour chaque tableau dans ranking_inter
+        #    est-ce que id_vainqueur est égal à l'indice 0 du tableau
+        #  si oui augmente indice 2 de +1
+        # si non (rien à faire) car ça va tester le tableau suivant
+        for r in ranking_inter:
+            if id_vainqueur == r[0]:
+                r[2] += 1
     else:
-        print("le match n'a pas eu lieu")
+        id_j1 = last_tour['match' + str(p + 1)][0]
+        id_j2 = last_tour['match' + str(p + 1)][1]
+        for r in ranking_inter:
+            if id_j1 == r[0]:
+                r[2] += 0.5
+            if id_j2 == r[0]:
+                r[2] += 0.5
 
+        # ranking_inter[n][2] = + 0.5 ajouter 0.5 à chaque joueur qui a fait pat
+            # récuperer les id des deux joueurs du match et tu vas boucler sur ranking_inter pour ajouter 0.5
+    # une fois que les scores internes sont mis à jour, il faut classer le ranking_inter en fonction du score interne
 
+print(ranking_inter)
 
-
-
-
-
+# classement de ranking inter
+# exporter ranking_inter[0,1,2,3,4 etc]
+# création d'une liste vide ranking_compare qui va se remplir des valeurs en comparant ranking inter
+# boucle dans une boucle qui va parcourir ranking_inter puis la nouvelle liste
+# condition si plus grand ou moins grand : utiliser la fonction insert
+#transformer sous forme de fonction et utiliser l'arguement (ranking_inter) qui est la liste a trier
+#for element in tableau 1:
+#	for i in range(len(tab2)):
+#		if elem[2] > tab2[i][2]:
+#			insert()

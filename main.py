@@ -69,7 +69,7 @@ def StartTournament(id):
         """Enregistrement du tour dans la base de donnée"""
         addTour(tour.serialise())
         tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
-        """ Enrengistrement de l'id du round dans l'objet tournoi"""
+        """ Enregistrement de l'id du round dans l'objet tournoi"""
         tournament.tournee.append(tour.doc_id)
         maj_tournoi(id, tournament)
     return render_template("start_tournament.html", match=match, tournament=oneTournament(id))
@@ -101,16 +101,25 @@ def Tour_progress(id):
     """Création d'une liste afin de stocker les id des joueurs gagnants d'abord"""
     rematch_list = []
     for p in range(4):
-        id_vainqueur = last_tour['match'+str(p+1)][2]
-        if id_vainqueur!="pat":
+        id_vainqueur = last_tour['match' + str(p + 1)][2]
+        if id_vainqueur != "pat":
+            print("id du vainqueur : " + id_vainqueur)
             # boucle sur ranking_inter pour chercher l'id du vainqueur (indice 0) pour modifier le score interne (indice 2)
             # pour chaque tableau dans ranking_inter
             #    est-ce que id_vainqueur est égal à l'indice 0 du tableau
-                    #  si oui augmente indice 2 de +1
-                    # si non (rien à faire) car ça va tester le tableau suivant
-        else: # si pat
-            # récuperer les id des deux joueurs du match et tu vas boucler sur ranking_inter pour ajouter 0.5
-    # une fois que les scores internes sont mis à jour, il faut classer le ranking_inter en fonction du score interne
+            #  si oui augmente indice 2 de +1
+            # si non (rien à faire) car ça va tester le tableau suivant
+            for r in ranking_inter:
+                if id_vainqueur == r[0]:
+                    r[2] += 1
+        else:
+            id_j1 = last_tour['match' + str(p + 1)][0]
+            id_j2 = last_tour['match' + str(p + 1)][1]
+            for r in ranking_inter:
+                if id_j1 == r[0]:
+                    r[2] += 0.5
+                if id_j2 == r[0]:
+                    r[2] += 0.5
 
  # tu crée rematch_list qui ne va contenir que les id des joueurs dans l'ordre voulu (attention ranking_inter est alors classé!)
     for j in ranking_inter:
@@ -120,6 +129,7 @@ def Tour_progress(id):
 
     list_matchs = []
     b = 0
+
 
     """Boucle pour itérer la round et extraire chaque match de chaque round"""
     for round in range(1, len(tours) + 1):
