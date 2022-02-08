@@ -1,13 +1,15 @@
 {
   "_default": {
     "1": {
-      "nom": "Tournoi Regional ",
-      "localisation": "Chambery",
+      "nom": "Tournoi Regional test",
+      "localisation": "Paris",
       "date": "2018-07-22",
       "nb_tours": "4",
       "tournee": [
         1,
-        2
+        2,
+        3,
+        4
       ],
       "timeControl": "Bullet",
       "players": [

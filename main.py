@@ -4,6 +4,7 @@ import os
 from Classe.Player import *
 from Classe.Tournament import *
 from Classe.Tour import *
+from operator import itemgetter
 
 app = Flask(__name__)
 
@@ -80,7 +81,6 @@ def Tour_progress(id):
     """Recupération du tournoi"""
     tournament = deserialiseTournoi(oneTournament(id))
     """Récupération des id du dernier tour"""
-
     tours = tournament.tournee
     """Recupération du dernier tour dans le tableau tournee"""
     #ajout date & heure de fin
@@ -120,9 +120,12 @@ def Tour_progress(id):
                     r[2] += 0.5
                 if id_j2 == r[0]:
                     r[2] += 0.5
+        print(ranking_inter)
+    ranking_done = sorted(ranking_inter, key=itemgetter(2), reverse=True)
+    print(ranking_done)
 
  # tu crée rematch_list qui ne va contenir que les id des joueurs dans l'ordre voulu (attention ranking_inter est alors classé!)
-    for j in ranking_inter:
+    for j in ranking_done:
         rematch_list.append(j[0])
     """ puis perdant par la suite afin de les faire jouer entre eux """
     #ajout fonction pat? si joueur 1 ou 2 etc #
@@ -148,6 +151,7 @@ def Tour_progress(id):
     for j in range(4):
         matchok = False
         i = 1
+        print(rematch_list)
         while not matchok and i < len(rematch_list):
             match = [rematch_list[0],rematch_list[i]]
             """verification que le match a déjà eu lieu"""
@@ -160,29 +164,27 @@ def Tour_progress(id):
                         matchok = True
                 else:
                     matchok = True
-
         """" Création des différents matchs (matchmakking) avec en simultanée l'id et le nom du joueur"""
         nouveau_match[str(j + 1)] = [match[0], match[1], None]
         matchtemplate[str(len(matchtemplate) + 1)] = [OnePlayer(match[0]), OnePlayer(match[1]),None]
 
         del rematch_list[0]
+        if i > len(rematch_list):
+            i = len(rematch_list)
         del rematch_list[i-1]
 
-    if int(id) == len(tournament.tournee): # sécurisation de la route pour éviter d'enregistrer des tours vides
-        """Creation de l'objet tour qui appelle la premier fonction"""
-        tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), nouveau_match["1"], nouveau_match["2"], nouveau_match["3"],
-                    nouveau_match["4"], ranking_inter)
-        """Enregistrement du tour dans la base de donnée"""
-        addTour(tour.serialise())
-        tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
-        """ Enrengistrement de l'id du round dans l'objet tournoi"""
-        tournament.tournee.append(tour.doc_id)
-        maj_tournoi(id, tournament)
-
+    #if int(id) == len(tournament.tournee): # sécurisation de la route pour éviter d'enregistrer des tours vides
+    """Creation de l'objet tour qui appelle la premier fonction"""
+    tour = Tour(id, "Round" + str(len(tournament.tournee) + 1), nouveau_match["1"], nouveau_match["2"], nouveau_match["3"],
+                nouveau_match["4"], ranking_done)
+    """Enregistrement du tour dans la base de donnée"""
+    addTour(tour.serialise())
+    tour = recup_tour(id, "Round" + str(len(tournament.tournee) + 1))
+    """ Enrengistrement de l'id du round dans l'objet tournoi"""
+    tournament.tournee.append(tour.doc_id)
+    maj_tournoi(id, tournament)
+    #verifier la longueur de tournament.tournee si tournamement.tournee est superieur a tournament.tour => rediriger vers fin du tournoi (recap des differents rounds : definir vainqueur tournoi)
     return render_template('tour_progress.html', match=matchtemplate, tournament=oneTournament(id))
-
-
-
 
 
 @app.route('/player_list/<id>')
