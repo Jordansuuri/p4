@@ -75,5 +75,4 @@ ranking_inter = [['7', '1500', 1], ['8', '1500', 1], ['9', '1500', 0.5], ['10', 
 ranking_done = sorted(ranking_inter, key=itemgetter(2), reverse = True)
 print(ranking_done)
 
-
-
+print(tournament.tournee)

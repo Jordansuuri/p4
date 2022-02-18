@@ -1,13 +1,13 @@
 {% extends 'index.html' %}
       {% block content %}
-        <h1><b> Début du tournoi </br></b></h1>
+        <h1><b> Start Tournoi </br></b></h1>
 
 <div id="site_content">
     <span>
-        <h1><b>Veuillez selectionner le vainqueur de chaque matchs</b></h1>
+        <p><b>Veuillez selectionner le vainqueur de chaque matchs</b></p>
           <form class="form_settings" action="/tour_progress/{{ tournament.doc_id }}" method="post">
              {% for i,m in match.items() %}
-            <b><p>Match {{ i }} </b> </br>
+            <p>Match {{ i }}  </br>
               {{ m[0].nom }} {{ m[0].prenom }} VS
               {{ m[1].nom }} {{ m[1].prenom }}</p>
                {% if m[2] == None %}
@@ -18,18 +18,13 @@
             </select> {% else %} Match terminé {% endif %}</p> </br>
             {% endfor %}
 
-        <h1><b><label for="name_tour">Nommez ce tour:</label></b></h1>
-        <input id="name_tour" type="name_tour"  name="name_tour" placeholder="Tour 1" value="Tour 1"><br><br>
 
-              <p style="padding-top: 20px"><span>&nbsp;</span>
-              <p style="padding-top: 20px"><span>&nbsp;</span>
+            <p style="padding-top: 20px"><span>&nbsp;</span>
+   <p style="padding-top: 20px"><span>&nbsp;</span>
     <input type="submit" class= button value="Enregistrer le résultat">
             </form>
-
-    <a href="/" class="button">Retour</a>
   </span>
+    <a href="/" class="button">Retour</a>
+
 </div>
       {% endblock %}
-
-
-</form>

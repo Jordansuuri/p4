@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
       {% block content %}
         <h1><b> Suite du Tournoi </br></b></h1>
+        <h1><b>   </br></b></h1>
 
 <div id="site_content">
     <span>
@@ -18,11 +19,15 @@
             </select> {% else %} Match terminé {% endif %}</p> </br>
             {% endfor %}
 
+        <h1><b><label for="name_tour">Nommez ce tour:</label></b></h1>
+        <input id="name_tour" type="name_tour"  name="name_tour" placeholder="Tour {{ numero_tour }}" value="Tour {{ numero_tour }}"><br><br>
 
             <p style="padding-top: 20px"><span>&nbsp;</span>
    <p style="padding-top: 20px"><span>&nbsp;</span>
     <input type="submit" class= button value="Enrengistrer le résultat">
             </form>
+
+
   </span>
     <a href="/" class="button">Retour</a>
 

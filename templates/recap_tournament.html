@@ -23,7 +23,11 @@
         <b> Nombre de tours: </b>
 {{ tournament.tours  }}
   </p>
+    {% if tournament.tournee|length == 0 %}
 <a href="/start_tournament/{{ tournament.doc_id }}" class="button">Commencer le tournoi</a>
+    {% else %}
+<a href="/tour_progress/{{ tournament.doc_id }}" class="button">Reprendre le tournoi</a>
+    {% endif %}
     </br>
 <a href="/tournament_list" class="button">Retour</a>
 </div>

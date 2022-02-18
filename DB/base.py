@@ -47,6 +47,10 @@ def recup_tour(id, nom):
     req = Query()
     return dbTour.get(req.idtournoi == id and req.nom == nom)
 
+def all_tours(id):
+    req = Query()
+    return dbTour.search(req.idtournoi == id)
+
 def oneTour(id):
     tour = dbTour.get(doc_id=int(id))
     return tour
